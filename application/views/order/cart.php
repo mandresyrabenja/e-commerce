@@ -43,7 +43,7 @@
 								<p class="cart_total_price"><?= $carts[$i]['amount'] ?></p>
 							</td>
 							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+								<a class="cart_quantity_delete" href="<?= site_url("cart/removeCartElement?index=$i") ?>"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
 						<?php
