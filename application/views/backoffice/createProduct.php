@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-sm2"></div>
 	<div class="col-sm-8">
-	<form action="#" method="POST" role="form">
+	<form action="<?= site_url('product/createProduct') ?>" method="POST" role="form">
 		<legend>Créer un article</legend>
 
 		<div class="form-group">
