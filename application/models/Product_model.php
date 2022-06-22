@@ -4,6 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product_model extends CI_Model
 {
 
+    public function list() {
+        return $this->db->get('product_details')->result();
+    }
+
     public function insert($name, $description, $price, $nb, $brand) {
         $data = array(
             'name' => $name,

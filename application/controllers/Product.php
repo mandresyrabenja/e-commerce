@@ -10,6 +10,13 @@ class Product extends CI_Controller
         $this->load->model('product_model', 'product');
     }
     
+    public function list() {
+        $data['products'] = $this->product->list();
+        $data['page'] = $this->load->view('backoffice/listProduct', $data, true);
+        
+		$this->load->view('backoffice/template', $data);
+    }
+
     public function createProduct() {
         $name = $this->input->post('name');
         $description = $this->input->post('description');
@@ -18,6 +25,7 @@ class Product extends CI_Controller
         $brand = $this->input->post('brand');
 
         $this->product->insert($name, $description, $price, $nb, $brand);
+        redirect('product/list');
     }
 
     public function createProductForm()

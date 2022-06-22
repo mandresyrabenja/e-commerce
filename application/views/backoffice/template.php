@@ -39,7 +39,7 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><a href="<?= site_url('product/createProductForm') ?>"><i class="fa fa-plus"></i> Créer un article</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Liste des souhaits</a></li>
+								<li><a href="<?= site_url('product/list') ?>"><i class="fa fa-list"></i> Liste des articles</a></li>
 								<li><a href="#"><i class="fa fa-shopping-cart"></i> Commandes</a></li>
 								<li><a href="#"><i class="fa fa-lock"></i> Se connecter</a></li>
 							</ul>
