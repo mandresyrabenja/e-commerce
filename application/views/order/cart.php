@@ -17,7 +17,9 @@
 					<tbody>
 						<?php 
 							if(isset($carts) && !empty($carts)) :
+								$total = 0;
 								for($i = 0; $i < count($carts); $i++) :
+									$total += $carts[$i]['amount'];
 									$plus = $carts[$i]['nb'] + 1;
 									$minus = $carts[$i]['nb'] - 1;
 						?>
@@ -46,12 +48,30 @@
 								<a class="cart_quantity_delete" href="<?= site_url("cart/removeCartElement?index=$i") ?>"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
-						<?php
-								endfor;
-							endif;
-						?>
+						<?php endfor ?>
+						
+						<tr>
+							<td colspan="4">&nbsp;</td>
+							<td colspan="2">
+								<table class="table table-condensed total-result">
+									<tr>
+										<td>Total</td>
+										<td><span><?= $total ?></span></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<a class="btn btn-warning" href="<?= site_url("cart/order") ?>">Confirmer</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<?php endif ?>
 					</tbody>
 				</table>
+				<?php if(isset($error)) : ?>
+					<div class="text-center text-danger"><?= $error ?></div>
+				<?php endif ?>
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
