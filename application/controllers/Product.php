@@ -10,6 +10,15 @@ class Product extends CI_Controller
         $this->load->model('product_model', 'product');
     }
     
+    
+    public function listProductClient() {
+        $data['products'] = $this->product->list();
+        $data['nbProducts'] = count($data['products']);
+        $data['page'] = $this->load->view('product/list', $data, true);
+        
+		$this->load->view('template', $data);
+    }
+
     public function list() {
         $data['products'] = $this->product->list();
         $data['page'] = $this->load->view('backoffice/listProduct', $data, true);
