@@ -30,6 +30,7 @@
 					</div><!--features_items-->
 				</div>
 			</div>
+			<?php if(isset($nbPage)) : ?>
 			<div class="row">
 				<div class="col-sm-12">
 					<ul class="pagination">
@@ -61,5 +62,6 @@
 					</ul> 
 				</div>
 			</div>
+			<?php endif ?>
 		</div>
 	</section>

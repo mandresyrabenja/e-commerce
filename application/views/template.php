@@ -52,20 +52,40 @@
 		<div class="header-bottom"><!--header-bottom-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-9">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Rechercher..."/>
-						</div>
+					<div class="col-sm-12 pull-right">
+						
+						<form action="<?php site_url('article/advancedSearch') ?>" method="POST" class="form-inline" role="form">
+							<div class="form-group">
+								<label for="brand">Catégorie</label>
+								<select name="brand" id="brand">
+									<option></option>
+								<?php 
+									if(isset($brands) && !empty($brands)) :
+										foreach($brands as $brand) : 
+								?>
+									<option value="<?= $brand->id ?>"><?= $brand->name ?></option>
+								<?php
+										endforeach;
+									endif;
+								?>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="min-price">Prix min</label>
+								<input type="number" class="form-control" name="min-price">
+							</div>
+							<div class="form-group">
+								<label for="max-price">Prix max</label>
+								<input type="number" class="form-control" name="max-price">
+							</div>
+							<div class="form-group">
+								<label for="keyword">Mots-clés</label>
+								<input type="text" class="form-control" name="keyword" placeholder="Rechercher">
+							</div>
+							
+						
+							<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+						</form>
 					</div>
 				</div>
 			</div>

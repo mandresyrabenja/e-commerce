@@ -24,6 +24,7 @@ class Product extends CI_Controller
         $data['nbPage'] = (( $nbProducts-($nbProducts%$pageSize) ) / $pageSize) + 1 ;
 
         $data['products'] = $this->product->listWithPage($pageSize, $pageSize*($currPage-1));
+        $data['brands'] = $this->product->findAllProductBrands();
         
         $data['page'] = $this->load->view('product/list', $data, true);
 		$this->load->view('template', $data);
