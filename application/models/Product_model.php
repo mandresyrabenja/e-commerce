@@ -4,6 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product_model extends CI_Model
 {
 
+    public function findById($id) {
+        $this->db->where('id', $id);
+        return $this->db->get('product_details')->result()[0];
+    }
     
     public function listWithPage($pageSize, $startWith) {
         $this->db->order_by('id', 'ASC');

@@ -9,7 +9,18 @@ class Product extends CI_Controller
         parent::__construct();
         $this->load->model('product_model', 'product');
     }
-    
+
+    public function productDetails() {
+
+        $productId = $this->input->get('productId');
+        
+        $data['product'] = $this->product->findById($productId);
+        $data['brands'] = $this->product->findAllProductBrands();
+        
+        $data['page'] = $this->load->view('product/details', $data, true);
+        $this->load->view('template', $data);
+    }
+
     public function advancedSearch() {
 
         $keyword = $this->input->post('keyword');

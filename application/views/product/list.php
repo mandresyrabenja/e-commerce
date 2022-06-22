@@ -14,8 +14,10 @@
 								<div class="product-image-wrapper">
 									<div class="single-products">
 											<div class="productinfo text-center">
-												<img src="<?= img_url('home/product2.jpg') ?>" alt="photo" />
-												<h2><?= $product->price ?>Ar</h2>
+												<a href="<?= site_url("product/productDetails?productId=$product->id") ?>">
+													<img src="<?= img_url('home/product2.jpg') ?>" alt="photo" />
+												</a>
+												<h2><?= $product->price ?>Jeton</h2>
 												<p><?= $product->name ?></p>
 												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ajouter au panier</a>
 											</div>

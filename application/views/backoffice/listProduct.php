@@ -6,7 +6,7 @@
                     <th>ID</th>
                     <th>Nom</th>
                     <th>Prix</th>
-                    <th>Marque</th>
+                    <th>Catégorie</th>
                     <th>Quantité en stock</th>
                 </tr>
             </thead>
