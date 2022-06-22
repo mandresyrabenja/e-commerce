@@ -54,7 +54,7 @@
 				<div class="row">
 					<div class="col-sm-12 pull-right">
 						
-						<form action="<?php site_url('article/advancedSearch') ?>" method="POST" class="form-inline" role="form">
+						<form action="<?= site_url('product/advancedSearch') ?>" method="POST" class="form-inline" role="form">
 							<div class="form-group">
 								<label for="brand">Catégorie</label>
 								<select name="brand" id="brand">
@@ -63,7 +63,7 @@
 									if(isset($brands) && !empty($brands)) :
 										foreach($brands as $brand) : 
 								?>
-									<option value="<?= $brand->id ?>"><?= $brand->name ?></option>
+									<option value="<?= $brand->name ?>"><?= $brand->name ?></option>
 								<?php
 										endforeach;
 									endif;
@@ -71,12 +71,12 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label for="min-price">Prix min</label>
-								<input type="number" class="form-control" name="min-price">
+								<label for="minPrice">Prix min</label>
+								<input type="number" class="form-control" name="minPrice">
 							</div>
 							<div class="form-group">
-								<label for="max-price">Prix max</label>
-								<input type="number" class="form-control" name="max-price">
+								<label for="maxPrice">Prix max</label>
+								<input type="number" class="form-control" name="maxPrice">
 							</div>
 							<div class="form-group">
 								<label for="keyword">Mots-clés</label>

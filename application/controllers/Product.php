@@ -10,6 +10,33 @@ class Product extends CI_Controller
         $this->load->model('product_model', 'product');
     }
     
+    public function advancedSearch() {
+
+        $keyword = $this->input->post('keyword');
+        $brand = $this->input->post('brand');
+        $minPrice = $this->input->post('minPrice');
+        $maxPrice = $this->input->post('maxPrice');
+
+        if( ($keyword == null) && ($brand == null) && ($minPrice == null) && ($maxPrice == null) ) {
+            redirect('product/getProductPageClient');
+        }
+
+        if($keyword != null)
+            $this->db->like('name', $keyword);
+        if($brand != null)
+            $this->db->where('brand', $brand);
+        if($minPrice != null)
+            $this->db->where('price >=', $minPrice);
+        if($maxPrice != null)
+            $this->db->where('price <=', $maxPrice);
+
+        $data['products'] = $this->db->get('product_details')->result();
+        $data['brands'] = $this->product->findAllProductBrands();
+        
+        $data['page'] = $this->load->view('product/list', $data, true);
+        $this->load->view('template', $data);
+    }
+
     public function getProductPageClient() {
 
         # Récuperation du taille et numero de page actuelle
