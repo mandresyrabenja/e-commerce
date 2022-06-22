@@ -4,6 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Customer_model extends CI_Model
 {
 
+    public function rechargeAccount($customerId, $amount) {
+        $data = array(
+            "customer_id" => $customerId,
+            "amount" => $amount,
+            "is_valid" => false
+        );
+
+        $this->db->insert('recharge', $data);
+
+    }
+
     public function findById($id) {
         $this->db->where('id', $id);
         return $this->db->get('customer')->result();

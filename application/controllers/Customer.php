@@ -11,6 +11,13 @@ class Customer extends CI_Controller
         $this->load->model('product_model', 'product');
     }
 
+    public function rechargeAccount() {
+        $money = $this->input->post('money');
+        $this->customer->rechargeAccount($this->session->userdata('customerId'), $money);
+
+        redirect('customer/coinForm');
+    }
+
     public function coinForm() {
         $data['money'] = $this->customer->findById($this->session->userdata('customerId'))[0]->money;
 

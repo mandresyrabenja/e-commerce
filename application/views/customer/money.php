@@ -10,7 +10,7 @@
         <div class="login-form">
             <!--login form-->
             <h2>Ajouter des jetons à votre compte</h2>
-            <form method="POST" action="#">
+            <form method="POST" action="<?= site_url('customer/rechargeAccount') ?>">
                 <input type="number" name="money" required />
                 <button type="submit" class="btn btn-default">Ajouter</button>
             </form>
