@@ -9,14 +9,45 @@ class Admin extends CI_Controller
         parent::__construct();
         $this->load->model('admin_model', 'admin');
     }
-    /**
-     * @return void
-     */
+    
+    public function deleteRecharge() {
+        $rechargeId = $this->input->get('rechargeId');
+        
+        $this->db->where('id', $rechargeId);
+        $this->db->delete('recharge');
+        
+        redirect('admin/listRecharge');
+    }
+
+    public function validateRecharge() {
+        $rechargeId = $this->input->get('rechargeId');
+        $customerId = $this->input->get('customerId');
+        $amount = $this->input->get('amount');
+
+        $this->db->set('money', "money+$amount", FALSE);
+        $this->db->where('id', $customerId);
+        $this->db->update('customer');
+
+        $this->db->set('is_valid', true);
+        $this->db->where('id', $rechargeId);
+        $this->db->update('recharge');
+
+        redirect('admin/listRecharge');
+    }
+
     public function index()
     {
         $this->load->view('backoffice/login');
     }
     
+    public function listRecharge() {
+        $this->db->where('is_valid', false);
+        $data['recharges'] = $this->db->get('recharge_details')->result();
+        
+        $data['page'] = $this->load->view('backoffice/listRecharge', $data, true);
+		$this->load->view('backoffice/template', $data);
+    }
+
     public function login()
 	{
 		
