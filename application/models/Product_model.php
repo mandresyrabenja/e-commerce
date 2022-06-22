@@ -4,6 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product_model extends CI_Model
 {
 
+    
+    public function listWithPage($pageSize, $startWith) {
+        return $this->db->get('product_details', $pageSize, $startWith)->result();
+    }
+
+    public function count() {
+        return $this->db->count_all('product');
+    }
+
     public function list() {
         return $this->db->get('product_details')->result();
     }
