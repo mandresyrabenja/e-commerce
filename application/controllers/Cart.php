@@ -26,7 +26,8 @@ class Cart extends CI_Controller
 
     public function modifyNb() {
 
-        if( $this->session->has_userdata('carts') && ($this->input->get('index') != null) && ($this->input->get('nb') != null) ) {
+        if( $this->session->has_userdata('carts') && ($this->input->get('index') != null) && ($this->input->get('nb') != null)
+            && ($this->input->get('nb') > 0) ) {
             $nb = $this->input->get('nb');
             $index = $this->input->get('index');
 
