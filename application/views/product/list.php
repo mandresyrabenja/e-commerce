@@ -19,7 +19,8 @@
 												</a>
 												<h2><?= $product->price ?>Jeton</h2>
 												<p><?= $product->name ?></p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ajouter au panier</a>
+												<a href="<?= site_url("product/productDetails?productId=$product->id") ?>" 
+													class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ajouter au panier</a>
 											</div>
 									</div>
 								</div>

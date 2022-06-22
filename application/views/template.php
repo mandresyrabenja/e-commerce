@@ -39,8 +39,7 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><a href="#"><i class="fa fa-user"></i> Compte</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Liste des souhaits</a></li>
-								<li><a href="#"><i class="fa fa-shopping-cart"></i> Commandes</a></li>
+								<li><a href="<?= site_url('cart/cart') ?>"><i class="fa fa-shopping-cart"></i> Panier</a></li>
 								<li><a href="#"><i class="fa fa-lock"></i> Se connecter</a></li>
 							</ul>
 						</div>

@@ -11,21 +11,23 @@
 			</div>
 			<div class="col-sm-7">
 				<div class="product-information"><!--/product-information-->
-					<img src="images/product-details/new.jpg" class="newarrival" alt="" />
-					<h2><?= $product->name ?></h2>
-					<p>Réference: <?= $product->id ?></p>
-					<img src="images/product-details/rating.png" alt="" />
-					<span>
-						<span><?= $product->price ?>Jeton</span>
-						<label>Quantity:</label>
-						<input type="text" value="3" />
-						<button type="button" class="btn btn-fefault cart">
-							<i class="fa fa-shopping-cart"></i>
-							Ajouter au panier
-						</button>
-					</span>
-					<p><b>Catégorie:</b> <?= $product->brand ?></p>
-					<p><b>Nombre disponible:</b> <?= $product->nb ?></p>
+					
+					<form class="form-inline" action="<?= site_url('cart/addCart') ?>" method="post">
+						<h2><?= $product->name ?></h2>
+						<p>Réference: <?= $product->id ?></p>
+						<span>
+							<span><?= $product->price ?>Jeton</span>
+							<input type="hidden" name="productId" value="<?= $product->id ?>">
+							<label>Quantité:</label>
+								<input type="number" name="nb" value="1" min="1" max="<?= $product->nb ?>" />
+								<button type="submit" class="btn btn-default cart">
+									<i class="fa fa-shopping-cart"></i>
+									Ajouter au panier
+								</button>
+						</span>
+						<p><b>Catégorie:</b> <?= $product->brand ?></p>
+						<p><b>Nombre disponible:</b> <?= $product->nb ?></p>
+					</form>
 				</div><!--/product-information-->
 			</div>
 		</div><!--/product-details-->
