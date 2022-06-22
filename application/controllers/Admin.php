@@ -8,7 +8,6 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->model('admin_model', 'admin');
-        $this->load->model('carType_model', 'carType');
     }
     /**
      * @return void
@@ -21,9 +20,10 @@ class Admin extends CI_Controller
     public function login()
 	{
 		
-		if($this->admin->isValidLogin($this->input->post('username'), $this->input->post('password'))) {
-            $this->session->set_userdata('admin', $this->input->post('login'));
-            redirect('car/addCar');
+		if($this->admin->isValidLogin($this->input->post('login'), $this->input->post('password'))) {
+            $adminId = $this->admin->getAdminId($this->input->post('login'))[0]->id;
+            $this->session->set_userdata('adminId', $adminId);
+            redirect('createArticleForm');
         } else {
             $data['error'] = true;
             $this->load->view('backoffice/login', $data);
