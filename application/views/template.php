@@ -38,11 +38,11 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-user"></i> Compte</a></li>
 								<li><a href="<?= site_url('cart/cart') ?>"><i class="fa fa-shopping-cart"></i> Panier</a></li>
 								<?php if(!isset($_SESSION['customerId'])) : ?>
 									<li><a href="<?= site_url('customer/loginForm') ?>"><i class="fa fa-lock"></i> Se connecter</a></li>
 								<?php else : ?>
+									<li><a href="<?= site_url('customer/coinForm') ?>"><i class="fa fa-money"></i> Jetons</a></li>
 									<li><a href="<?= site_url('customer/logout') ?>"><i class="fa fa-unlock"></i> Deconnexion</a></li>
 								<?php endif ?>
 							</ul>

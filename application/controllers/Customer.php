@@ -11,6 +11,14 @@ class Customer extends CI_Controller
         $this->load->model('product_model', 'product');
     }
 
+    public function coinForm() {
+        $data['money'] = $this->customer->findById($this->session->userdata('customerId'))[0]->money;
+
+        $data['page'] = $this->load->view('customer/money', $data, true);
+        $data['brands'] = $this->product->findAllProductBrands();
+        $this->load->view('template', $data);
+    }
+
     public function logout() {
         if($this->session->has_userdata('customerId'))
            $this->session->unset_userdata('customerId');

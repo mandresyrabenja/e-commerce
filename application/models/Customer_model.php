@@ -4,6 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Customer_model extends CI_Model
 {
 
+    public function findById($id) {
+        $this->db->where('id', $id);
+        return $this->db->get('customer')->result();
+    }
+
     public function findCustomer($email, $password) {
         $this->db->where('email', $email);
         $this->db->where('password', $password);
