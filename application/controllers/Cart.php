@@ -10,6 +10,21 @@ class Cart extends CI_Controller
         $this->load->model('product_model', 'product');
     }
 
+    public function modifyNb() {
+
+        if( $this->session->has_userdata('carts') && ($this->input->get('index') != null) && ($this->input->get('nb') != null) ) {
+            $nb = $this->input->get('nb');
+            $index = $this->input->get('index');
+
+            $carts = $this->session->userdata('carts');
+            $carts[$index]['nb'] = $nb;
+            $this->session->set_userdata('carts', $carts);
+        }
+
+        redirect('cart/cart');
+
+    }
+
     public function cart() {
         if( $this->session->has_userdata('carts') ) {
             $data['carts'] =$this->sessionToCart();
