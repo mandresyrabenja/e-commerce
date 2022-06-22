@@ -6,6 +6,7 @@ class Product_model extends CI_Model
 
     
     public function listWithPage($pageSize, $startWith) {
+        $this->db->order_by('id', 'ASC');
         return $this->db->get('product_details', $pageSize, $startWith)->result();
     }
 

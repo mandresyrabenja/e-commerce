@@ -29,15 +29,32 @@ class Product extends CI_Controller
 		$this->load->view('template', $data);
     }
     
+    
+    public function getProductPageAdmin() {
+
+        # Récuperation du taille et numero de page actuelle
+        $pageSize = $this->input->get('pageSize') != null ? $this->input->get('pageSize') : 10;
+        $currPage = $this->input->get('currPage') != null ? $this->input->get('currPage') : 1;
+        $data['currPage'] = $currPage;
+        $data['prevPage'] = $currPage - 1;
+        $data['nextPage'] = $currPage + 1;
+
+        # Nombre des pages
+        $nbProducts = $this->product->count();
+        $data['nbPage'] = (( $nbProducts-($nbProducts%$pageSize) ) / $pageSize) + 1 ;
+
+        $data['products'] = $this->product->listWithPage($pageSize, $pageSize*($currPage-1));
+        
+        $data['page'] = $this->load->view('backoffice/listProduct', $data, true);
+		$this->load->view('backoffice/template', $data);
+    }
+
     public function listProductClient() {
         redirect('product/getProductPageClient');
     }
 
     public function list() {
-        $data['products'] = $this->product->list();
-        $data['page'] = $this->load->view('backoffice/listProduct', $data, true);
-        
-		$this->load->view('backoffice/template', $data);
+        redirect('product/getProductPageAdmin');
     }
 
     public function createProduct() {
