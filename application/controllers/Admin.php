@@ -23,7 +23,7 @@ class Admin extends CI_Controller
 		if($this->admin->isValidLogin($this->input->post('login'), $this->input->post('password'))) {
             $adminId = $this->admin->getAdminId($this->input->post('login'))[0]->id;
             $this->session->set_userdata('adminId', $adminId);
-            redirect('createArticleForm');
+            redirect('product/createProductForm');
         } else {
             $data['error'] = true;
             $this->load->view('backoffice/login', $data);

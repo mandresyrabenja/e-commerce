@@ -38,7 +38,7 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-user"></i> Compte</a></li>
+								<li><a href="<?= site_url('product/createProductForm') ?>"><i class="fa fa-plus"></i> Créer un article</a></li>
 								<li><a href="#"><i class="fa fa-star"></i> Liste des souhaits</a></li>
 								<li><a href="#"><i class="fa fa-shopping-cart"></i> Commandes</a></li>
 								<li><a href="#"><i class="fa fa-lock"></i> Se connecter</a></li>
@@ -72,8 +72,9 @@
 		</div><!--/header-bottom-->
 	</header><!--/header-->
 	
-	
-	<?= isset($page) ? $page : '' ?>
+	<div class="container">
+		<?php if(isset($page)) echo $page; ?>
+	</div>
 	
 	<footer id="footer"><!--Footer-->
 		
