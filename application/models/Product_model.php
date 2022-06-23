@@ -22,13 +22,15 @@ class Product_model extends CI_Model
         return $this->db->get('product_details')->result();
     }
 
-    public function insert($name, $description, $price, $nb, $brand) {
+    public function insert($name, $description, $price, $nb, $brand, $unit, $quantity) {
         $data = array(
             'name' => $name,
             'description' => $description,
             'price' => $price,
             'nb' => $nb,
-            'brand' => $brand
+            'brand' => $brand,
+            'unit' => $unit,
+            'quantity' => $quantity
         );
 
         $this->db->insert('product', $data);

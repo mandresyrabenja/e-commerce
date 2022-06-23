@@ -10,7 +10,7 @@
 			<input type="text" class="form-control" id="name" name="name" required>
 		</div>
 		<div class="form-group">
-			<label for="brand">Marque</label>
+			<label for="brand">Catégorie</label>
 			<select name="brand" id="brand" required>
 				<?php if(isset($brands) && !empty($brands)) : 
 					foreach($brands as $brand) :	
@@ -21,6 +21,18 @@
 					endif; 
 				?>
 			</select>
+		</div>
+		<div class="form-group">
+			<label for="unit">Unité de mesure</label>
+			<select name="unit" id="unit" required>
+				<option value="g">Gramme</option>
+				<option value="ml">Millilitre</option>
+				<option value="unite">Unité</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="quantity">Quantité par conteneur(sachet, carton, ...)</label>
+			<input type="number" class="form-control" id="quantity" name="quantity" required>
 		</div>
 		<div class="form-group">
 			<label for="price">Prix</label>
