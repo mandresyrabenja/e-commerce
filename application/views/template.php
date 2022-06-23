@@ -38,6 +38,8 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
+								<li><a href="<?= site_url('product/listProductClient') ?>"><i class="fa fa-list"></i> Articles</a></li>
+								<li><a href="<?= site_url('recipe/listRecipeClient') ?>"><i class="fa fa-list"></i> Recettes</a></li>
 								<li><a href="<?= site_url('cart/cart') ?>"><i class="fa fa-shopping-cart"></i> Panier</a></li>
 								<?php if(!isset($_SESSION['customerId'])) : ?>
 									<li><a href="<?= site_url('customer/loginForm') ?>"><i class="fa fa-lock"></i> Se connecter</a></li>
