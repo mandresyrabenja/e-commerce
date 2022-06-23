@@ -143,6 +143,7 @@ class Cart extends CI_Controller
                     "unitPrice" => $product->price,
                     "nb" => $cart->nb,
                     "amount" => $product->price * $cart->nb,
+                    "isRecipe" => $cart->isRecipe,
                 )
             );
         }
@@ -163,7 +164,8 @@ class Cart extends CI_Controller
             $carts,
             array(
                 "productId" => $productId,
-                "nb" => $nb
+                "nb" => $nb,
+                "isRecipe" => false
             )
         );
         setcookie('carts', json_encode($carts),  time() + (86400 * 30), "/");

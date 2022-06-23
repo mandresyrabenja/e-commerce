@@ -10,6 +10,7 @@
 							<td class="description"></td>
 							<td class="price">Prix</td>
 							<td class="quantity">Quantité</td>
+							<td class="quantity">Type de commande</td>
 							<td class="total">Total</td>
 							<td></td>
 						</tr>
@@ -40,6 +41,9 @@
 									<input class="cart_quantity_input" type="text" name="quantity" value="<?= $carts[$i]['nb'] ?>" autocomplete="off" readonly>
 									<a class="cart_quantity_down" href="<?= site_url("cart/modifyNb?index=$i&nb=$minus") ?>"> - </a>
 								</div>
+							</td>
+							<td class="cart_quantity">
+								<p class="cart_quantity"><?= ($carts[$i]['isRecipe']) ? 'Recette' : 'Produit' ?></p>
 							</td>
 							<td class="cart_total">
 								<p class="cart_total_price"><?= $carts[$i]['amount'] ?></p>
