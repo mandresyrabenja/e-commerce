@@ -11,6 +11,15 @@ class Recipe extends CI_Controller
         $this->load->model('product_model', 'product');
     }
 
+    public function recipeDetailsClient() {
+        $data['recipe'] =$this->recipe->findById($this->input->get('id'));
+        $data['recipeDetails'] =$this->recipe->findDetails($this->input->get('id'));
+
+        $data['page'] = $this->load->view('recipe/detailsRecipeClient', $data, true);
+        $data['brands'] = $this->product->findAllProductBrands();
+		$this->load->view('template', $data);
+    }
+
     public function listRecipeClient() {
         $data['recipes'] = $this->recipe->findAll();
         
