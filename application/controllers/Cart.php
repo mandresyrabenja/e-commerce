@@ -70,35 +70,34 @@ class Cart extends CI_Controller
         $this->db->update('customer');
 
         # Suppression du session de l'achat
-        $this->session->set_userdata('carts', array());
+        setcookie('carts', '[]',  time() + (86400 * 30), "/");
 
         redirect('product/listProductClient');
     }
 
     public function removeCartElement() {
 
-        if( $this->session->has_userdata('carts') && ($this->input->get('index') != null) ) {
+        if( isset($_COOKIE['carts']) && ($this->input->get('index') != null) ) {
             $index = $this->input->get('index');
 
-            $carts = $this->session->userdata('carts');
+            $carts = json_decode($_COOKIE['carts']);
             array_splice($carts, $index, 1);
-            $this->session->set_userdata('carts', $carts);
+            setcookie('carts', json_encode($carts),  time() + (86400 * 30), "/");
         }
 
         redirect('cart/cart');
-
     }
 
     public function modifyNb() {
 
-        if( $this->session->has_userdata('carts') && ($this->input->get('index') != null) && ($this->input->get('nb') != null)
+        if( isset($_COOKIE['carts']) && ($this->input->get('index') != null) && ($this->input->get('nb') != null)
             && ($this->input->get('nb') > 0) ) {
             $nb = $this->input->get('nb');
             $index = $this->input->get('index');
 
-            $carts = $this->session->userdata('carts');
-            $carts[$index]['nb'] = $nb;
-            $this->session->set_userdata('carts', $carts);
+            $carts = json_decode($_COOKIE['carts']);
+            $carts[$index]->nb = $nb;
+            setcookie('carts', json_encode($carts),  time() + (86400 * 30), "/");
         }
 
         redirect('cart/cart');
@@ -106,8 +105,18 @@ class Cart extends CI_Controller
     }
 
     public function cart() {
-        if( $this->session->has_userdata('carts') ) {
+        if( isset($_COOKIE['carts']) ) {
             $data['carts'] =$this->sessionToCart();
+
+            if($this->input->get('error') != null) {
+                $data['error'] = $this->input->get('error');
+            }
+            
+            $data['page'] = $this->load->view('order/cart', $data, true);
+            $data['brands'] = $this->product->findAllProductBrands();
+            $this->load->view('template', $data);
+        } else {
+            $data['carts'] = array();
 
             if($this->input->get('error') != null) {
                 $data['error'] = $this->input->get('error');
@@ -122,17 +131,18 @@ class Cart extends CI_Controller
 
     public function sessionToCart() {
         $carts = array();
+        $cookieCarts = json_decode($_COOKIE['carts']);
 
-        foreach($this->session->userdata('carts') as $cart) {
-            $product = $this->product->findById($cart["productId"]);
+        foreach($cookieCarts as $cart) {
+            $product = $this->product->findById($cart->productId);
             array_push(
                 $carts,
                 array(
                     "productId" => $product->id,
                     "productName" => $product->name,
                     "unitPrice" => $product->price,
-                    "nb" => $cart["nb"],
-                    "amount" => $product->price * $cart["nb"],
+                    "nb" => $cart->nb,
+                    "amount" => $product->price * $cart->nb,
                 )
             );
         }
@@ -144,11 +154,11 @@ class Cart extends CI_Controller
         $productId = $this->input->post('productId');
         $nb = $this->input->post('nb');
         
-        if( !$this->session->has_userdata('carts') ) {
-            $this->session->set_userdata('carts', array());
+        if( !isset($_COOKIE['carts']) ) {
+            setcookie('carts', '[]',  time() + (86400 * 30), "/");
         }
 
-        $carts = $this->session->userdata('carts');
+        $carts = json_decode($_COOKIE['carts']);
         array_push(
             $carts,
             array(
@@ -156,7 +166,7 @@ class Cart extends CI_Controller
                 "nb" => $nb
             )
         );
-        $this->session->set_userdata('carts', $carts);
+        setcookie('carts', json_encode($carts),  time() + (86400 * 30), "/");
 
         redirect('cart/cart');
     }
