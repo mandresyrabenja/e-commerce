@@ -40,6 +40,14 @@ class Admin extends CI_Controller
         $this->load->view('backoffice/login');
     }
     
+    public function stats() {
+        $data['productSales'] = $this->db->get('top3_product_sale')->result();
+        $data['recipeSales'] = $this->db->get('top3_recipe_sale')->result();
+        
+        $data['page'] = $this->load->view('backoffice/stats', $data, true);
+		$this->load->view('backoffice/template', $data);
+    }
+
     public function listRecharge() {
         $this->db->where('is_valid', false);
         $data['recharges'] = $this->db->get('recharge_details')->result();

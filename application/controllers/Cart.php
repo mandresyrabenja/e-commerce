@@ -75,7 +75,8 @@ class Cart extends CI_Controller
             $recipes = json_decode($_COOKIE['recipes']);
             foreach($recipes as $recipe) {
                 $data = array(
-                    'recipe_id' => $recipe,
+                    'recipe_id' => $recipe->recipe_id,
+                    'nb' => $recipe->nb,
                     'date' => date("Y-m-d")
                 );
                 $this->db->insert('order_recipe', $data);
@@ -195,7 +196,10 @@ class Cart extends CI_Controller
             $recipes = json_decode($_COOKIE['recipes']);
             if($recipes == null)
                 $recipes = array();
-            array_push($recipes, $this->input->post('recipeId'));
+            $recipeOrder = new stdClass;
+            $recipeOrder->recipe_id = $this->input->post('recipeId');
+            $recipeOrder->nb = $nb;
+            array_push($recipes, $recipeOrder);
             setcookie('recipes', json_encode($recipes),  time() + (86400 * 30), "/");
 
             # Récuperation des ingrédient du recette
