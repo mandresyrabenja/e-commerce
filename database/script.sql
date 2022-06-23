@@ -5,7 +5,7 @@
 -- Dumped from database version 13.1
 -- Dumped by pg_dump version 14.1
 
--- Started on 2022-06-23 19:38:11
+-- Started on 2022-06-24 00:44:48
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -65,7 +65,7 @@ INSERT INTO public.brand (id, name) VALUES (5, 'Huile');
 -- Data for Name: customer; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.customer (id, name, email, money, password) VALUES (4, 'Rabe', 'rabe@gmail.com', 7.000, '1234');
+INSERT INTO public.customer (id, name, email, money, password) VALUES (4, 'Rabe', 'rabe@gmail.com', 9739507.000, '1234');
 
 
 --
@@ -74,6 +74,12 @@ INSERT INTO public.customer (id, name, email, money, password) VALUES (4, 'Rabe'
 -- Data for Name: order; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public."order" (id, date, customer_id) VALUES (14, '2022-06-23', 4);
+INSERT INTO public."order" (id, date, customer_id) VALUES (15, '2022-06-23', 4);
+INSERT INTO public."order" (id, date, customer_id) VALUES (16, '2022-06-23', 4);
+INSERT INTO public."order" (id, date, customer_id) VALUES (17, '2022-06-23', 4);
+INSERT INTO public."order" (id, date, customer_id) VALUES (18, '2022-06-23', 4);
+INSERT INTO public."order" (id, date, customer_id) VALUES (19, '2022-06-23', 4);
 
 
 --
@@ -82,6 +88,26 @@ INSERT INTO public.customer (id, name, email, money, password) VALUES (4, 'Rabe'
 -- Data for Name: order_details; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (9, 2012, 14, 2000.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (10, 2013, 14, 2500.000, 2);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (11, 2014, 14, 3000.000, 2);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (12, 2011, 15, 10000.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (13, 2015, 15, 12000.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (14, 2012, 16, 2000.000, 2);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (15, 2011, 16, 10000.000, 1);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (16, 2012, 16, 2000.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (17, 2013, 16, 2500.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (18, 2014, 16, 3000.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (19, 2011, 16, 10000.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (20, 2011, 17, 10000.000, 2);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (21, 2011, 18, 10000.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (22, 2015, 18, 12000.000, 1);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (23, 2012, 18, 2000.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (24, 2013, 18, 2500.000, 1);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (25, 2014, 18, 3000.000, 1);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (26, 2011, 18, 10000.000, 1);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (27, 2013, 19, 2500.000, 3);
+INSERT INTO public.order_details (id, product_id, order_id, unit_price, nb) VALUES (28, 2011, 19, 10000.000, 2);
 
 
 --
@@ -91,10 +117,10 @@ INSERT INTO public.customer (id, name, email, money, password) VALUES (4, 'Rabe'
 --
 
 INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2011, 'Tongotromby', 10000.00, 'Tongotr''omby 1 kilao', 20, 4, 'g', 1000.0);
-INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2012, 'Pomme de terre', 2000.00, 'Ovy Ovy Ovy Ovy Ovy ', 11, 3, 'g', 500.0);
-INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2013, 'Carotte', 2500.00, 'Karaoty Karaoty Karaoty Karaoty Karaoty Karaoty ', 15, 3, 'g', 500.0);
-INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2014, 'Poireau', 3000.00, 'Zavamaintso Zavamaintso Zavamaintso Zavamaintso Zavamaintso ', 8, 3, 'g', 200.0);
-INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2015, 'Huile tournesol 1L', 12000.00, 'Menaka Menaka Menaka Menaka Menaka Menaka ', 4, 5, 'ml', 1000.0);
+INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2012, 'Pomme de terre', 2000.00, 'Ovy Ovy Ovy Ovy Ovy ', 20, 3, 'g', 500.0);
+INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2013, 'Carotte', 2500.00, 'Karaoty Karaoty Karaoty Karaoty Karaoty Karaoty ', 20, 3, 'g', 500.0);
+INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2014, 'Poireau', 3000.00, 'Zavamaintso Zavamaintso Zavamaintso Zavamaintso Zavamaintso ', 20, 3, 'g', 200.0);
+INSERT INTO public.product (id, name, price, description, nb, brand, unit, quantity) VALUES (2015, 'Huile tournesol 1L', 12000.00, 'Menaka Menaka Menaka Menaka Menaka Menaka ', 20, 5, 'ml', 1000.0);
 
 
 --
@@ -109,26 +135,32 @@ INSERT INTO public.recharge (id, customer_id, amount, is_valid) VALUES (4, 4, 11
 INSERT INTO public.recharge (id, customer_id, amount, is_valid) VALUES (5, 4, 14.000, true);
 INSERT INTO public.recharge (id, customer_id, amount, is_valid) VALUES (6, 4, 280.000, true);
 INSERT INTO public.recharge (id, customer_id, amount, is_valid) VALUES (7, 4, 210.000, true);
+INSERT INTO public.recharge (id, customer_id, amount, is_valid) VALUES (8, 4, 10000000.000, true);
 
 
 --
 -- TOC entry 3111 (class 0 OID 75288)
--- Dependencies: 216
+-- Dependencies: 215
 -- Data for Name: recipe; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.recipe (id, name) VALUES (2, 'ab');
-INSERT INTO public.recipe (id, name) VALUES (3, 'abb');
-INSERT INTO public.recipe (id, name) VALUES (4, 'a');
+INSERT INTO public.recipe (id, name) VALUES (6, 'Lasopy tongotr''omby');
+INSERT INTO public.recipe (id, name) VALUES (7, 'Lasopy silamangany');
 
 
 --
 -- TOC entry 3113 (class 0 OID 75300)
--- Dependencies: 218
+-- Dependencies: 217
 -- Data for Name: recipe_details; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.recipe_details (id, quantity, recipe_id, product_id) VALUES (1, 100.0, 2, 2015);
+INSERT INTO public.recipe_details (id, quantity, recipe_id, product_id) VALUES (7, 1000.0, 6, 2011);
+INSERT INTO public.recipe_details (id, quantity, recipe_id, product_id) VALUES (8, 300.0, 6, 2012);
+INSERT INTO public.recipe_details (id, quantity, recipe_id, product_id) VALUES (9, 300.0, 6, 2013);
+INSERT INTO public.recipe_details (id, quantity, recipe_id, product_id) VALUES (10, 100.0, 6, 2014);
+INSERT INTO public.recipe_details (id, quantity, recipe_id, product_id) VALUES (11, 400.0, 7, 2012);
+INSERT INTO public.recipe_details (id, quantity, recipe_id, product_id) VALUES (12, 100.0, 7, 2013);
+INSERT INTO public.recipe_details (id, quantity, recipe_id, product_id) VALUES (13, 200.0, 7, 2015);
 
 
 --
@@ -164,7 +196,7 @@ SELECT pg_catalog.setval('public.customer_id_seq', 4, true);
 -- Name: order_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.order_details_id_seq', 8, true);
+SELECT pg_catalog.setval('public.order_details_id_seq', 28, true);
 
 
 --
@@ -173,7 +205,7 @@ SELECT pg_catalog.setval('public.order_details_id_seq', 8, true);
 -- Name: order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.order_id_seq', 13, true);
+SELECT pg_catalog.setval('public.order_id_seq', 19, true);
 
 
 --
@@ -191,28 +223,28 @@ SELECT pg_catalog.setval('public.product_id_seq', 2015, true);
 -- Name: recharge_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.recharge_id_seq', 7, true);
+SELECT pg_catalog.setval('public.recharge_id_seq', 9, true);
 
 
 --
 -- TOC entry 3136 (class 0 OID 0)
--- Dependencies: 217
+-- Dependencies: 216
 -- Name: recipe_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.recipe_details_id_seq', 1, true);
+SELECT pg_catalog.setval('public.recipe_details_id_seq', 13, true);
 
 
 --
 -- TOC entry 3137 (class 0 OID 0)
--- Dependencies: 215
+-- Dependencies: 214
 -- Name: recipe_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.recipe_id_seq', 4, true);
+SELECT pg_catalog.setval('public.recipe_id_seq', 7, true);
 
 
--- Completed on 2022-06-23 19:38:11
+-- Completed on 2022-06-24 00:44:49
 
 --
 -- PostgreSQL database dump complete
