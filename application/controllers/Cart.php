@@ -9,6 +9,7 @@ class Cart extends CI_Controller
         parent::__construct();
         $this->load->model('product_model', 'product');
         $this->load->model('customer_model', 'customer');
+        $this->load->model('recipe_model', 'recipe');
     }
 
     public function order() {
@@ -70,35 +71,34 @@ class Cart extends CI_Controller
         $this->db->update('customer');
 
         # Suppression du session de l'achat
-        $this->session->set_userdata('carts', array());
+        setcookie('carts', '[]',  time() + (86400 * 30), "/");
 
         redirect('product/listProductClient');
     }
 
     public function removeCartElement() {
 
-        if( $this->session->has_userdata('carts') && ($this->input->get('index') != null) ) {
+        if( isset($_COOKIE['carts']) && ($this->input->get('index') != null) ) {
             $index = $this->input->get('index');
 
-            $carts = $this->session->userdata('carts');
+            $carts = json_decode($_COOKIE['carts']);
             array_splice($carts, $index, 1);
-            $this->session->set_userdata('carts', $carts);
+            setcookie('carts', json_encode($carts),  time() + (86400 * 30), "/");
         }
 
         redirect('cart/cart');
-
     }
 
     public function modifyNb() {
 
-        if( $this->session->has_userdata('carts') && ($this->input->get('index') != null) && ($this->input->get('nb') != null)
+        if( isset($_COOKIE['carts']) && ($this->input->get('index') != null) && ($this->input->get('nb') != null)
             && ($this->input->get('nb') > 0) ) {
             $nb = $this->input->get('nb');
             $index = $this->input->get('index');
 
-            $carts = $this->session->userdata('carts');
-            $carts[$index]['nb'] = $nb;
-            $this->session->set_userdata('carts', $carts);
+            $carts = json_decode($_COOKIE['carts']);
+            $carts[$index]->nb = $nb;
+            setcookie('carts', json_encode($carts),  time() + (86400 * 30), "/");
         }
 
         redirect('cart/cart');
@@ -106,8 +106,18 @@ class Cart extends CI_Controller
     }
 
     public function cart() {
-        if( $this->session->has_userdata('carts') ) {
+        if( isset($_COOKIE['carts']) ) {
             $data['carts'] =$this->sessionToCart();
+
+            if($this->input->get('error') != null) {
+                $data['error'] = $this->input->get('error');
+            }
+            
+            $data['page'] = $this->load->view('order/cart', $data, true);
+            $data['brands'] = $this->product->findAllProductBrands();
+            $this->load->view('template', $data);
+        } else {
+            $data['carts'] = array();
 
             if($this->input->get('error') != null) {
                 $data['error'] = $this->input->get('error');
@@ -122,17 +132,21 @@ class Cart extends CI_Controller
 
     public function sessionToCart() {
         $carts = array();
+        $cookieCarts = json_decode($_COOKIE['carts']);
 
-        foreach($this->session->userdata('carts') as $cart) {
-            $product = $this->product->findById($cart["productId"]);
+        foreach($cookieCarts as $cart) {
+            $product = $this->product->findById($cart->productId);
             array_push(
                 $carts,
                 array(
                     "productId" => $product->id,
                     "productName" => $product->name,
+                    "unitQuantity" => $product->quantity,
+                    "unit" => $product->unit,
                     "unitPrice" => $product->price,
-                    "nb" => $cart["nb"],
-                    "amount" => $product->price * $cart["nb"],
+                    "nb" => $cart->nb,
+                    "amount" => $product->price * $cart->nb,
+                    "isRecipe" => $cart->isRecipe,
                 )
             );
         }
@@ -144,19 +158,110 @@ class Cart extends CI_Controller
         $productId = $this->input->post('productId');
         $nb = $this->input->post('nb');
         
-        if( !$this->session->has_userdata('carts') ) {
-            $this->session->set_userdata('carts', array());
+        if( !isset($_COOKIE['carts']) || (json_decode($_COOKIE['carts']) == null) ) {
+            setcookie('carts', '[]',  time() + (86400 * 30), "/");
+        }
+        if( !isset($_COOKIE['neededProducts']) || (json_decode($_COOKIE['neededProducts']) == null) ) {
+            setcookie('neededProducts', '[]',  time() + (86400 * 30), "/");
         }
 
-        $carts = $this->session->userdata('carts');
-        array_push(
-            $carts,
-            array(
-                "productId" => $productId,
-                "nb" => $nb
-            )
-        );
-        $this->session->set_userdata('carts', $carts);
+        $carts = json_decode($_COOKIE['carts']);
+        if($carts == null)
+            $carts = array();
+        if($productId != null) {
+            $newCart = new stdClass;
+            $newCart->productId = $productId;
+            $newCart->nb = $nb;
+            $newCart->isRecipe = false;
+            array_push($carts,$newCart);
+        } else {
+            # Récuperation des ingrédient du recette
+            $recipeDetails =$this->recipe->findDetails($this->input->post('recipeId'));
+            $neededProducts = array();
+            foreach($recipeDetails as $r) {
+                array_push(
+                    $neededProducts,
+                    array(
+                        "productId" => $r->product_id,
+                        "quantity" => $nb * $r->quantity,
+                        "unitQuantity" => $r->unitquantity
+                    )
+                );
+            }
+            
+            # Récuperation des ingrédients des recettes du cookie
+            $cookies = json_decode($_COOKIE['neededProducts']);
+            if($cookies == null)
+                $cookies = array();
+            $cookiesSize = count($cookies);
+            foreach($neededProducts as $neededProduct) {
+                $isCookieContainsProduct = false;
+                $cookieTableIndex = 0;
+
+                for($i = 0; $i < $cookiesSize; $i++) {
+                    if($cookies[$i]->productId == $neededProduct['productId']) {
+                        $isCookieContainsProduct = true;
+                        $cookieTableIndex = $i;
+                        break;
+                    }
+                }
+
+                if($isCookieContainsProduct) {
+                    $cookies[$cookieTableIndex]->quantity += $neededProduct['quantity'];
+                } else {
+                    $cookieNewProduct = new stdClass;
+                    $cookieNewProduct->productId = $neededProduct['productId'];
+                    $cookieNewProduct->quantity = $neededProduct['quantity'];
+                    $cookieNewProduct->unitQuantity = $neededProduct['unitQuantity'];
+                    array_push($cookies, $cookieNewProduct);
+                }
+            }
+            setcookie('neededProducts', json_encode($cookies),  time() + (86400 * 30), "/");
+            
+            # Suppression des anciennes données de panier de recette
+            $newCartsData = array();
+            for($i = 0; $i < count($carts); $i++) {
+                if($carts[$i]->isRecipe == false) {
+                    array_push($newCartsData, $carts[$i]);
+                }
+            }
+            $carts = $newCartsData;
+
+            # Ajout des nouvelles données dans le panier
+            foreach($cookies as $cook) {
+                if($cook->quantity < $cook->unitQuantity) {
+                    $productNb = 1;
+                } elseif($cook->quantity % $cook->unitQuantity == 0) {
+                    $productNb = $cook->quantity / $cook->unitQuantity;
+                } else {
+                    $productNb = ((double)($cook->quantity - ($cook->quantity % $cook->unitQuantity)) / (double)$cook->unitQuantity) + 1;
+                }
+                var_dump($productNb);
+
+                $newCart = new stdClass;
+                $newCart->productId = $cook->productId;
+                $newCart->nb = $productNb;
+                $newCart->isRecipe = true;
+                array_push($carts,$newCart);
+            }
+        }       
+        setcookie('carts', json_encode($carts),  time() + (86400 * 30), "/");
+
+        redirect('cart/cart');
+    }
+
+    public function removeRecipeCart() {
+        setcookie('neededProducts', '[]',  time() + (86400 * 30), "/");
+        
+        $carts = json_decode($_COOKIE['carts']);
+        $newCartsData = array();
+        for($i = 0; $i < count($carts); $i++) {
+            if($carts[$i]->isRecipe == false) {
+                array_push($newCartsData, $carts[$i]);
+            }
+        }
+        $carts = $newCartsData;
+        setcookie('carts', json_encode($carts),  time() + (86400 * 30), "/");
 
         redirect('cart/cart');
     }

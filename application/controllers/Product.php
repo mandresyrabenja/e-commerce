@@ -102,8 +102,10 @@ class Product extends CI_Controller
         $price = $this->input->post('price');
         $nb = $this->input->post('nb');
         $brand = $this->input->post('brand');
+        $unit = $this->input->post('unit');
+        $quantity = $this->input->post('quantity');
 
-        $this->product->insert($name, $description, $price, $nb, $brand);
+        $this->product->insert($name, $description, $price, $nb, $brand, $unit, $quantity);
         redirect('product/list');
     }
 

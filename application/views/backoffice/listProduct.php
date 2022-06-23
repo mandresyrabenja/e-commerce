@@ -7,6 +7,7 @@
                     <th>Nom</th>
                     <th>Prix</th>
                     <th>Catégorie</th>
+                    <th>Quantité par unité</th>
                     <th>Quantité en stock</th>
                 </tr>
             </thead>
@@ -20,6 +21,7 @@
                             <td><?= $product->name ?></td>
                             <td><?= $product->price ?></td>
                             <td><?= $product->brand ?></td>
+                            <td><?= $product->quantity ?><?= $product->unit ?></td>
                             <td><?= $product->nb ?></td>
                         </tr>
                 <?php

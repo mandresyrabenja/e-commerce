@@ -9,7 +9,9 @@
 							<td class="image">Article</td>
 							<td class="description"></td>
 							<td class="price">Prix</td>
+							<td class="price">Quantité unitaire</td>
 							<td class="quantity">Quantité</td>
+							<td class="quantity">Type de commande</td>
 							<td class="total">Total</td>
 							<td></td>
 						</tr>
@@ -35,17 +37,25 @@
 								<p><?= $carts[$i]['unitPrice'] ?></p>
 							</td>
 							<td class="cart_quantity">
+								<p><?= $carts[$i]['unitQuantity'] ?><?= $carts[$i]['unit'] ?></p>
+							</td>
+							<td class="cart_quantity">
 								<div class="cart_quantity_button">
 									<a class="cart_quantity_up" href="<?= site_url("cart/modifyNb?index=$i&nb=$plus") ?>"> + </a>
 									<input class="cart_quantity_input" type="text" name="quantity" value="<?= $carts[$i]['nb'] ?>" autocomplete="off" readonly>
 									<a class="cart_quantity_down" href="<?= site_url("cart/modifyNb?index=$i&nb=$minus") ?>"> - </a>
 								</div>
 							</td>
+							<td class="cart_quantity">
+								<p class="cart_quantity"><?= ($carts[$i]['isRecipe']) ? 'Recette' : 'Produit' ?></p>
+							</td>
 							<td class="cart_total">
 								<p class="cart_total_price"><?= $carts[$i]['amount'] ?></p>
 							</td>
 							<td class="cart_delete">
-								<a class="cart_quantity_delete" href="<?= site_url("cart/removeCartElement?index=$i") ?>"><i class="fa fa-times"></i></a>
+								<a class="cart_quantity_delete" 
+									href="<?= (!$carts[$i]['isRecipe']) ? site_url("cart/removeCartElement?index=$i") : site_url("cart/removeRecipeCart") ?>">
+									<i class="fa fa-times"></i></a>
 							</td>
 						</tr>
 						<?php endfor ?>
