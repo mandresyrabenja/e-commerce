@@ -10,8 +10,17 @@ class Recipe extends CI_Controller
         $this->load->model('recipe_model', 'recipe');
     }
 
+    function list() {
+        $data['recipes'] = $this->recipe->findAll();
+        
+        $data['page'] = $this->load->view('recipe/list', $data, true);
+		$this->load->view('backoffice/template', $data);
+    }
+
     function create() {
         $this->recipe->create($this->input->post('name'));
+
+        redirect('recipe/list');
     }
 
     function createRecipeForm() {
