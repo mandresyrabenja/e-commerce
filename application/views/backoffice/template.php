@@ -41,6 +41,7 @@
 								<li><a href="<?= site_url('product/createProductForm') ?>"><i class="fa fa-plus"></i> Créer un article</a></li>
 								<li><a href="<?= site_url('product/list') ?>"><i class="fa fa-list"></i> Liste des articles</a></li>
 								<li><a href="<?= site_url('admin/listRecharge') ?>"><i class="fa fa-money"></i> Recharges</a></li>
+								<li><a href="<?= site_url('recipe/createRecipeForm') ?>"><i class="fa fa-plus"></i> Créer une recette</a></li>
 							</ul>
 						</div>
 					</div>
