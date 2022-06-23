@@ -12,11 +12,11 @@
 			<div class="col-sm-7">
 				<div class="product-information"><!--/product-information-->
 					
-					<form class="form-inline" action="#" method="post">
+					<form class="form-inline" action="<?= site_url('cart/addCart') ?>" method="post">
 						<h2><?= $recipe->name ?></h2>
 						<p>Réference: <?= $recipe->id ?></p>
 						<span>
-							<input type="hidden" name="productId" value="<?= $recipe->id ?>">
+							<input type="hidden" name="recipeId" value="<?= $recipe->id ?>">
 							<label>Quantité:</label>
 								<input type="number" name="nb" value="1" min="1" />
 								<button type="submit" class="btn btn-default cart">
