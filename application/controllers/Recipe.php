@@ -8,12 +8,23 @@ class Recipe extends CI_Controller
     {
         parent::__construct();
         $this->load->model('recipe_model', 'recipe');
+        $this->load->model('product_model', 'product');
+    }
+
+    public function addIngredient() {
+        $recipe_id = $this->input->post('recipe_id');
+        $product_id = $this->input->post('product_id');
+        $quantity = $this->input->post('quantity');
+
+        $this->recipe->addIngredient($recipe_id, $product_id, $quantity);
+        redirect('recipe/recipeDetails?id='.$recipe_id);
     }
 
     public function recipeDetails() {
         $data['recipe'] =$this->recipe->findById($this->input->get('id'));
         $data['recipeDetails'] =$this->recipe->findDetails($this->input->get('id'));
-        
+        $data['products'] =$this->product->list();
+
         $data['page'] = $this->load->view('recipe/details', $data, true);
 		$this->load->view('backoffice/template', $data);
     }
