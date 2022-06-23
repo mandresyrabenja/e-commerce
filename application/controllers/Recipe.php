@@ -10,20 +10,28 @@ class Recipe extends CI_Controller
         $this->load->model('recipe_model', 'recipe');
     }
 
-    function list() {
+    public function recipeDetails() {
+        $data['recipe'] =$this->recipe->findById($this->input->get('id'));
+        $data['recipeDetails'] =$this->recipe->findDetails($this->input->get('id'));
+        
+        $data['page'] = $this->load->view('recipe/details', $data, true);
+		$this->load->view('backoffice/template', $data);
+    }
+
+    public function list() {
         $data['recipes'] = $this->recipe->findAll();
         
         $data['page'] = $this->load->view('recipe/list', $data, true);
 		$this->load->view('backoffice/template', $data);
     }
 
-    function create() {
+    public function create() {
         $this->recipe->create($this->input->post('name'));
 
         redirect('recipe/list');
     }
 
-    function createRecipeForm() {
+    public function createRecipeForm() {
         $data['page'] = $this->load->view('recipe/create', [], true);
 		$this->load->view('backoffice/template', $data);
     }

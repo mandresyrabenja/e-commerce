@@ -18,7 +18,7 @@
                             <td><?= $recipe->id ?></td>
                             <td><?= $recipe->name ?></td>
                             <td>
-                                <a href="<?= site_url("") ?>">
+                                <a href="<?= site_url("recipe/recipeDetails?id=$recipe->id") ?>">
                                     <i class="fa fa-list"></i>
                                 </a>
                             </td>
