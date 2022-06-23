@@ -70,8 +70,23 @@ class Cart extends CI_Controller
         $this->db->where('id', $customer->id);
         $this->db->update('customer');
 
+        # Si l'achat a des recettes
+        if(isset($_COOKIE['recipes']) && (json_decode($_COOKIE['recipes']) != null) && !empty(json_decode($_COOKIE['recipes'])) ) {
+            $recipes = json_decode($_COOKIE['recipes']);
+            foreach($recipes as $recipe) {
+                $data = array(
+                    'recipe_id' => $recipe->recipe_id,
+                    'nb' => $recipe->nb,
+                    'date' => date("Y-m-d")
+                );
+                $this->db->insert('order_recipe', $data);
+            }
+        }
+
         # Suppression du session de l'achat
         setcookie('carts', '[]',  time() + (86400 * 30), "/");
+        setcookie('neededProducts', '[]',  time() + (86400 * 30), "/");
+        setcookie('recipes', '[]',  time() + (86400 * 30), "/");
 
         redirect('product/listProductClient');
     }
@@ -164,6 +179,9 @@ class Cart extends CI_Controller
         if( !isset($_COOKIE['neededProducts']) || (json_decode($_COOKIE['neededProducts']) == null) ) {
             setcookie('neededProducts', '[]',  time() + (86400 * 30), "/");
         }
+        if( !isset($_COOKIE['recipes']) || (json_decode($_COOKIE['recipes']) == null) ) {
+            setcookie('recipes', '[]',  time() + (86400 * 30), "/");
+        }
 
         $carts = json_decode($_COOKIE['carts']);
         if($carts == null)
@@ -175,6 +193,15 @@ class Cart extends CI_Controller
             $newCart->isRecipe = false;
             array_push($carts,$newCart);
         } else {
+            $recipes = json_decode($_COOKIE['recipes']);
+            if($recipes == null)
+                $recipes = array();
+            $recipeOrder = new stdClass;
+            $recipeOrder->recipe_id = $this->input->post('recipeId');
+            $recipeOrder->nb = $nb;
+            array_push($recipes, $recipeOrder);
+            setcookie('recipes', json_encode($recipes),  time() + (86400 * 30), "/");
+
             # Récuperation des ingrédient du recette
             $recipeDetails =$this->recipe->findDetails($this->input->post('recipeId'));
             $neededProducts = array();
@@ -236,7 +263,6 @@ class Cart extends CI_Controller
                 } else {
                     $productNb = ((double)($cook->quantity - ($cook->quantity % $cook->unitQuantity)) / (double)$cook->unitQuantity) + 1;
                 }
-                var_dump($productNb);
 
                 $newCart = new stdClass;
                 $newCart->productId = $cook->productId;
@@ -252,6 +278,7 @@ class Cart extends CI_Controller
 
     public function removeRecipeCart() {
         setcookie('neededProducts', '[]',  time() + (86400 * 30), "/");
+        setcookie('recipes', '[]',  time() + (86400 * 30), "/");
         
         $carts = json_decode($_COOKIE['carts']);
         $newCartsData = array();
