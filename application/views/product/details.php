@@ -26,6 +26,7 @@
 								</button>
 						</span>
 						<p><b>Catégorie:</b> <?= $product->brand ?></p>
+						<p><b>Quantité:</b> <?= $product->quantity ?><?= $product->unit ?></p>
 						<p><b>Nombre disponible:</b> <?= $product->nb ?></p>
 					</form>
 				</div><!--/product-information-->
